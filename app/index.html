@@ -1,4 +1,11 @@
 <html>
+<head>
+   <style>
+      #favoriteList {
+        display: none;
+      }
+   </style>
+  </head>
   <body>
     <h2>
       Welcome to the Band Name Generator
@@ -13,15 +20,19 @@
       <span id="noun"></span>
     </p>
 
+    <button id="addFavorite">Add to favorites</button>
+    <p id='favoriteRes'></p>
+    <button id="showFavorites">Show favorites</button>
+    <ul id="favoriteList"></ul>
+
     <br>
     <h3>Submit words!</h3>
     <form id="submitWords">
       <label>Give us an adjective:</label><input type="text" name="adjective">
-      <label>Give us a noun:</label><input type="text" name="noun">
       <label>Give us a verb:</label><input type="text" name="verb">
+      <label>Give us a noun:</label><input type="text" name="noun">
       <input type="submit" value="Submit Words"/>
     </form>
-
     <p id='adjectiveRes'></p>
     <p id='nounRes'></p>
     <p id='verbRes'></p>

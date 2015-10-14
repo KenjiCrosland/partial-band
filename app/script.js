@@ -2,7 +2,7 @@
 
 $(function() {
 
-  $("button").click(function() {
+  $("#name").click(function() {
     $.get('adjective', function(response) {
       var adjective = response.word;
       $("#adjective").text(adjective);
@@ -20,12 +20,41 @@ $(function() {
 
   });
 
+  $("#addFavorite").click(function() {
+    var adjective = $("#adjective").text();
+    var verb = $("#verb").text();
+    var noun = $("#noun").text();
+
+    var bandNameString = adjective + " " + verb + " " + noun;
+
+    var favoritePost = {favoriteString: bandNameString};
+
+    $.post("favorites", favoritePost, function(response){
+      var favoriteRes = response.msg;
+      $("#favoriteRes").text(favoriteRes);
+      $("#favoriteList").append("<li>" + bandNameString + "</li>");
+    });
+
+  });
+
+  $("#showFavorites").click(function(){
+    $( "#favoriteList" ).slideToggle( "slow", function() {
+    // Animation complete.
+    });
+    $.get("favorites", function(response){
+      $("#favoriteList").empty();
+      for (var favoriteString in response){
+        $("#favoriteList").append("<li>" + favoriteString + "</li>");
+      }
+    })
+  });
+
   $("#submitWords").on("submit", function(e) {
     e.preventDefault();
 
     var adjective = $("input[name=adjective]").val();
     var noun = $("input[name=noun]").val();
-    var verb = $("input[name=verb").val();
+    var verb = $("input[name=verb]").val();
     var adjPost;
     var nounPost;
     var verbPost;
@@ -51,7 +80,7 @@ $(function() {
         $("#verbRes").text(verbRes);
       });
     }
-
+    $("#submitWords")[0].reset();
   });
 
 });
