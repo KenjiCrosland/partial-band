@@ -29,7 +29,7 @@ $(function() {
 
     var favoritePost = {favoriteString: bandNameString};
 
-    $.post("favorites", favoritePost, function(response){
+    $.post("favorites", favoritePost, function(response) {
       var favoriteRes = response.msg;
       $("#favoriteRes").text(favoriteRes);
       $("#favoriteList").append("<li>" + bandNameString + "</li>");
@@ -37,16 +37,24 @@ $(function() {
 
   });
 
-  $("#showFavorites").click(function(){
-    $( "#favoriteList" ).slideToggle( "slow", function() {
-    // Animation complete.
+  $("#showFavorites").click(function() {
+    $("#favoriteList").slideToggle("slow", function() {
+      var $button = $("#showFavorites");
+      if ($button.text() === "Show favorites") {
+        $button.text("Hide favorites");
+      } else {
+        $button.text("Show favorites");
+      }
+
+      // Animation complete.
     });
-    $.get("favorites", function(response){
+
+    $.get("favorites", function(response) {
       $("#favoriteList").empty();
-      for (var favoriteString in response){
+      for (var favoriteString in response) {
         $("#favoriteList").append("<li>" + favoriteString + "</li>");
       }
-    })
+    });
   });
 
   $("#submitWords").on("submit", function(e) {
@@ -65,21 +73,20 @@ $(function() {
         var adjectiveRes = response.msg;
         $("#adjectiveRes").text(adjectiveRes);
       });
-    }
-    if (noun) {
+    } else if (noun) {
       nounPost = {word: noun};
-      $.post("noun", nounPost, function(response){
+      $.post("noun", nounPost, function(response) {
         var nounRes = response.msg;
         $("#nounRes").text(nounRes);
       });
-    }
-    if (verb) {
+    } else if (verb) {
       verbPost = {word: verb};
-      $.post("verb", verbPost, function(response){
+      $.post("verb", verbPost, function(response) {
         var verbRes = response.msg;
         $("#verbRes").text(verbRes);
       });
     }
+
     $("#submitWords")[0].reset();
   });
 

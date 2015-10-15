@@ -7,10 +7,10 @@ var port = process.env.PORT || 3000;
 var Adjective = require('./lib/adjective.js');
 var Verb = require('./lib/verb.js');
 var Noun = require('./lib/noun.js');
-var getRandomWord = require('./lib/getRandomWord.js');
-var postWord = require('./lib/postWord.js');
 var Favorite = require('./lib/favorite.js');
-var postFavorite = require('./lib/postFavorite.js')
+var getRandomWord = require('./lib/getRandomWord.js');
+var postWord = require('./lib/postFunctions.js').postWord;
+var postFavorite = require('./lib/postFunctions.js').postFavorite;
 
 var adjective = new Adjective();
 var verb = new Verb();
@@ -24,8 +24,6 @@ app.use(bodyparser.urlencoded({
 
 app.use(express.static(__dirname + '/app/'));
 
-
-
 app.get('/adjective', function(req, res) {
   res.json(getRandomWord(adjective));
 });
@@ -38,7 +36,7 @@ app.get('/noun', function(req, res) {
   res.json(getRandomWord(noun));
 });
 
-app.get('/favorites', function(req, res){
+app.get('/favorites', function(req, res) {
   res.json(favorite);
 });
 
@@ -57,8 +55,8 @@ app.post('/verb', function(req, res) {
   res.json(word);
 });
 
-app.post('/favorites', function(req, res){
-  var favoriteString = postWord(req.body.favoriteString, favorite);
+app.post('/favorites', function(req, res) {
+  var favoriteString = postFavorite(req.body.favoriteString, favorite);
   res.json(favoriteString);
 });
 
